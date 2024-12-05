@@ -2,7 +2,7 @@
 const gameVersion = 1.1;
 
 const desc = `A simple journal tracker for Webfishing (v${gameVersion})`
-const title = `Webfishing | Journal Tracker (v${gameVersion})`
+const title = `wfishing | A Journal Tracker (v${gameVersion})`
 ---
 
 <!DOCTYPE html>
