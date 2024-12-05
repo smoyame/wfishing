@@ -295,7 +295,7 @@ body {
 .quality-bar {
 	display: flex;
 	gap: max(.125rem, 3%);
-	width: 100%;
+	width: min(100%, 55ch);
 	justify-content: center;
 }
 
