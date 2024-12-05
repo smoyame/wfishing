@@ -6,6 +6,10 @@
 	font-stretch: 100;
 }
 
+.unknown-class {
+	background: url('../images/meta.png')
+}
+
 *,
 *::before,
 *::after {
