@@ -34,7 +34,6 @@ if (localStorage.getItem('journal')) {
 		let decodedKey = parseInt(bin8FromHex(pair[0]), 2).toString()
 		let decodedProgress = indexListFromBin(bin8FromHex(pair[1]))
 		pair = [decodedKey, decodedProgress]
-		console.log(decodedKey)
 		loadedProgress = pair
 		return item = pair
 	})
@@ -63,7 +62,6 @@ form.addEventListener('change', () => {
 
 	let data = activeKeys.map((entry) => entry = [hexFromBin8(Number(entry).toString(2).padStart(8, '0')), hexFromBin8(binFromIndexList(formData.getAll(entry)))])
 	let dataString = data.map((item) => item.join('q')).join(',')
-	console.log(data);
 	localStorage.setItem('journal', dataString)
 })
 

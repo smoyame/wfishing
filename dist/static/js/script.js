@@ -67,7 +67,6 @@ if (localStorage.getItem('journal')) {
         var decodedKey = parseInt(bin8FromHex(pair[0]), 2).toString();
         var decodedProgress = indexListFromBin(bin8FromHex(pair[1]));
         pair = [decodedKey, decodedProgress];
-        console.log(decodedKey);
         loadedProgress_2 = pair;
         return item = pair;
     });
@@ -113,6 +112,5 @@ form.addEventListener('change', function () {
     var activeKeys = __spreadArray([], __read(new Set(allKeys)), false);
     var data = activeKeys.map(function (entry) { return entry = [hexFromBin8(Number(entry).toString(2).padStart(8, '0')), hexFromBin8(binFromIndexList(formData.getAll(entry)))]; });
     var dataString = data.map(function (item) { return item.join('q'); }).join(',');
-    console.log(data);
     localStorage.setItem('journal', dataString);
 });
