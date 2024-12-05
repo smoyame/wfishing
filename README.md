@@ -1,7 +1,10 @@
 # Journal Tracker
 `For webfishing as of v1.1.`
 
-Real close to getting that last diamond. Made this tracker to have fun with Webc templating in 11ty. Anything to stop unnecessary bloat.
+Made to indulge my need to people-watch and read chatlogs instead of opening up my journal in-game, or hoarding browser tabs.
+
+Real close to getting that last diamond. Also, made this tracker to have fun with Webc templating in 11ty.
+
 
 ## Want to add:
 * Filter by quality tier for need-to-catch fish
