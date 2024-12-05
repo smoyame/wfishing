@@ -1,6 +1,7 @@
 ---
 layout: layout.webc
 ---
+<div class="pending"></div>
 <nav class="nav">
 	<ul class="nav-list">
 		<li class="nav-item"><a href="#all">All</a></li>

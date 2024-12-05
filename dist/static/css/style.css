@@ -86,6 +86,22 @@ body {
 	background: var(--clr-green);
 }
 
+.wrapper::after {
+	content: '';
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: url('../images/scene.png');
+	width: 100vw;
+	height: 100vh;
+	filter: blur(10px);
+	opacity: .25;
+	background-size: cover;
+	background-attachment: fixed;
+	z-index: -1;
+}
+
 [data-quality] {
 	accent-color: var(--_clr-quality, blue);
 }
@@ -123,19 +139,32 @@ body {
 }
 
 .site-header {
-	margin-bottom: 2rem;
+	margin-bottom: 1.25rem;
 }
 
 .wrapper {
 	margin-inline: auto;
-	margin-block: 2rem;
-	width: min(180ch, calc(100% - 2rem))
+	margin-block: min(5vw, 2rem) 2rem;
+	width: min(180ch, calc(100% - 2rem));
+}
+
+.pending {
+	height: min(5vw, 1rem);
+	width: 100%;
 }
 
 .site-title {
 	color: var(--bg);
 	font-size: 2.5rem;
-	margin-block-start: 2em;
+	margin-block-start: 1em;
+	padding: .75em 1em;
+	background: var(--clr-green);
+	border-radius: 999rem;
+	display: inline-block;
+	transform: rotate(-3deg);
+	text-align: center;
+	margin-left: -1vw;
+	margin-block-end: -1.125em;
 }
 
 .journal:not(:has(:is(:target))) .journal-section,
@@ -172,7 +201,7 @@ body {
 }
 
 .nav {
-	margin-bottom: min(5vw, 2.5rem);
+	margin-bottom: min(5vw, 2rem);
 }
 
 .nav-list {
@@ -238,7 +267,7 @@ body {
 	justify-content: space-between;
 	background-color: var(--bg);
 	border-radius: var(--radius);
-	padding: min(2vw, 1rem);
+	padding: min(4vw, 1rem);
 }
 
 .card header {
