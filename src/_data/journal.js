@@ -528,6 +528,14 @@ const jData = [
 		prefix_class: "fish"
 	},
 	{
+		_key: "69",
+		name: "heliocoprion",
+		title: "Heliocoprion",
+		section: "misc",
+		type: "rain",
+		prefix_class: "fish"
+	},
+	{
 		_key: "67",
 		name: "horseshoe_crab",
 		title: "Horseshoe Crab",
@@ -541,22 +549,6 @@ const jData = [
 		title: "Leedsichthys",
 		section: "misc",
 		type: "rain",
-		prefix_class: "fish"
-	},
-	{
-		_key: "69",
-		name: "heliocoprion",
-		title: "Heliocoprion",
-		section: "misc",
-		type: "rain",
-		prefix_class: "fish"
-	},
-	{
-		_key: "70",
-		name: "voidfish",
-		title: "CREATURE",
-		section: "misc",
-		type: "void",
 		prefix_class: "fish"
 	},
 	{
@@ -622,6 +614,14 @@ const jData = [
 		section: "misc",
 		type: "trash",
 		prefix_class: "wtrash"
+	},
+	{
+		_key: "70",
+		name: "voidfish",
+		title: "CREATURE",
+		section: "misc",
+		type: "void",
+		prefix_class: "fish"
 	}
 ]
 
