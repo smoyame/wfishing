@@ -381,3 +381,12 @@ input:checked::after {
 .filter input:checked::after {
 	content: '';
 }
+
+.wrapper:has([data-filter="normal"]:not(:checked)) .journal-content .card:has([data-quality="normal"]:checked),
+.wrapper:has([data-filter="shining"]:not(:checked)) .journal-content .card:has([data-quality="shining"]:checked),
+.wrapper:has([data-filter="glistening"]:not(:checked)) .journal-content .card:has([data-quality="glistening"]:checked),
+.wrapper:has([data-filter="opulent"]:not(:checked)) .journal-content .card:has([data-quality="opulent"]:checked),
+.wrapper:has([data-filter="radiant"]:not(:checked)) .journal-content .card:has([data-quality="radiant"]:checked),
+.wrapper:has([data-filter="alpha"]:not(:checked)) .journal-content .card:has([data-quality="alpha"]:checked) {
+	display: none;
+}
