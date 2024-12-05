@@ -1,0 +1,38 @@
+---js
+const gameVersion = 1.1;
+
+const desc = `A simple journal tracker for Webfishing (v${gameVersion})`
+const title = `Webfishing | Journal Tracker (v${gameVersion})`
+---
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" :content="desc">
+	<meta name="keywords" content="webfishing, journal, tracker, quality, tier, completion">
+
+	<meta property="og:title" :content="title">
+	<meta property="og:type" content="" webc:nokeep>
+	<meta property="og:url" content="" webc:nokeep>
+	<meta property="og:image" content="" webc:nokeep>
+	<meta property="og:image:alt" content="" webc:nokeep>
+
+	<title @text="title"></title>
+
+	<link webc:keep rel="stylesheet" href="static/css/style.css" type="text/css" />
+</head>
+
+<body>
+	<div class="wrapper">
+		<header class="site-header">
+			<h1 class="site-title site-heading">Webfishing Journal&nbsp;Tracker</h1>
+		</header>
+		<div @raw="content" class="journal" id="all"></div>
+	</div>
+	<script src="static/js/script.js" webc:keep></script>
+</body>
+
+</html>

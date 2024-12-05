@@ -1,0 +1,14 @@
+<article class="card" :data-card-subject="name">
+	<header class="card-header">
+		<h3 class="card-heading" @text="title">
+		</h3>
+		<fieldset class="quality-bar" :data-key="key" :id="name" form="form">
+			<input type="checkbox"
+				webc:for="(quality, index) of ['normal', 'shining', 'glistening', 'opulent', 'radiant', 'alpha']"
+				:data-quality="quality" @attributes="({id: `e${key}q${index}`, name: `${key}`, value: `${index}`})">
+		</fieldset>
+	</header>
+	<figure>
+		<img :src="source" alt="">
+	</figure>
+</article>

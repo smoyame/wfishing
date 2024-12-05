@@ -1,0 +1,15 @@
+{
+	"exclude": [
+		"./node_modules/*"
+	],
+	"compilerOptions": {
+		"lib": [
+			"ES2023",
+			"DOM",
+			"DOM.AsyncIterable",
+			"DOM.Iterable"
+		],
+		"outDir": "./src/static/js",
+		"downlevelIteration": true
+	}
+}
