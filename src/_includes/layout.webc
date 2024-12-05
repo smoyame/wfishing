@@ -15,15 +15,24 @@ const title = `Webfishing | Journal Tracker (v${gameVersion})`
 	<meta name="keywords" content="webfishing, journal, tracker, quality, tier, completion">
 
 	<meta property="og:title" :content="title">
-	<meta property="og:type" content="" webc:nokeep>
-	<meta property="og:url" content="" webc:nokeep>
-	<meta property="og:image" content="" webc:nokeep>
-	<meta property="og:image:alt" content="" webc:nokeep>
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://smoyame.github.io/wfishing/">
+	<meta property="og:image" content="static/images/meta.png">
+	<meta property="og:image:alt" content="A journal tracker for the game Webfishing by lamedeveloper.">
 
 	<title @text="title"></title>
 
 	<link webc:keep rel="stylesheet" href="static/css/style.css" type="text/css" />
 	<link webc:keep rel="stylesheet" href="static/css/misc-order.css" type="text/css" />
+
+	<link rel="icon" type="image/png" href="static/favicon/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/svg+xml" href="static/favicon/favicon.svg" />
+	<link rel="shortcut icon" href="static/favicon/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="180x180" href="static/favicon/apple-touch-icon.png" />
+	<meta name="apple-mobile-web-app-title" content="Webfishing Journal Tracker" />
+	<link rel="manifest" href="static/favicon/site.webmanifest" />
+
+	<link rel="canonical" href="https://smoyame.github.io/wfishing/" />
 </head>
 
 <body>
