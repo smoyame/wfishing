@@ -34,6 +34,15 @@ const title = `wfishing | A Journal Tracker (v${gameVersion})`
 
 	<link rel="canonical" href="https://smoyame.github.io/wfishing/" />
 </head>
+<script webc:keep>
+	function backtoTop() {
+		window.scrollTo({
+			top: 0,
+			left: 0,
+			behavior: "smooth",
+		});
+	}
+</script>
 
 <body>
 	<div class="wrapper">
@@ -41,6 +50,11 @@ const title = `wfishing | A Journal Tracker (v${gameVersion})`
 			<h1 class="site-title site-heading">Webfishing Journal&nbsp;Tracker</h1>
 		</header>
 		<div @raw="content" class="journal" id="all"></div>
+		<footer class="site-footer">
+			<nav>
+				<button class="button" type="button" onclick="backtoTop()">Back to top</button>
+			</nav>
+		</footer>
 	</div>
 	<script src="static/js/script.js" webc:keep></script>
 </body>
