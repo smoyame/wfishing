@@ -202,7 +202,7 @@ body {
 }
 
 .nav {
-	margin-bottom: min(5vw, 2rem);
+	margin-bottom: min(3vw, 1rem);
 }
 
 .nav-list {
@@ -298,7 +298,8 @@ body {
 	justify-content: center;
 }
 
-.quality-bar input {
+.quality-bar input,
+.filter input {
 	position: relative;
 	appearance: none;
 	width: 15%;
@@ -310,7 +311,8 @@ body {
 	outline-color: var(--_clr-quality);
 }
 
-.quality-bar input::before {
+.quality-bar input::before,
+.filter input::before {
 	content: '';
 	display: block;
 	width: 100%;
@@ -338,4 +340,44 @@ input:checked::after {
 	font-weight: bold;
 	font-size: 1rem;
 	color: var(--bg);
+}
+
+.filter {
+	margin-inline: auto;
+	margin-block-start: max(calc(-1 * 5vw + 2em), 0rem);
+	width: fit-content;
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem 1em;
+	align-items: center;
+	justify-content: center;
+	margin-block-end: min(5vw, 2.5rem);
+}
+
+.filter-title {
+	display: inline-block;
+}
+
+.filter-options {
+	display: flex;
+	gap: .5rem;
+}
+
+.filter input {
+	width: 2rem;
+	border-radius: .25rem;
+	aspect-ratio: 1;
+}
+
+.filter input:checked {
+	outline: .3rem solid var(--clr-bright);
+	outline-offset: -.5rem;
+}
+
+.filter input::before {
+	border-radius: .25rem;
+}
+
+.filter input:checked::after {
+	content: '';
 }

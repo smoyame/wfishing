@@ -1,13 +1,23 @@
 ---
 layout: layout.webc
 ---
-<div class="pending"></div>
+<section class="settings">
+	<div class="filter">
+		<h2 class="filter-title">Filter:</h2>
+		<div class="filter-options">
+			<input type="checkbox"
+				webc:for="(quality, index) of ['normal', 'shining', 'glistening', 'opulent', 'radiant', 'alpha']"
+				:data-quality="quality" :data-filter="quality"
+				@attributes="({id: `fq${index}`, name: `filter`, value: `${quality}`})" checked="true">
+		</div>
+	</div>
+</section>
 <nav class="nav">
 	<ul class="nav-list">
 		<li class="nav-item"><a href="#freshwater">Freshwater</a></li>
 		<li class="nav-item"><a href="#saltwater">Saltwater</a></li>
 		<li class="nav-item"><a href="#misc">Misc</a></li>
-		<li class="nav-item"><a href="#all">All</a></li>
+		<!-- <li class="nav-item"><a href="#all">All</a></li> -->
 	</ul>
 </nav>
 <form class="form journal-content" id="journal">

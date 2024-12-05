@@ -23,13 +23,25 @@
 		<header class="site-header">
 			<h1 class="site-title site-heading">Webfishing Journal&nbsp;Tracker</h1>
 		</header>
-		<div id="all" class="journal"><div class="pending"></div>
+		<div id="all" class="journal"><section class="settings">
+	<div class="filter">
+		<h2 class="filter-title">Filter:</h2>
+		<div class="filter-options">
+			<input type="checkbox" data-quality="normal" data-filter="normal" checked="true" id="fq0" name="filter" value="normal">
+<input type="checkbox" data-quality="shining" data-filter="shining" checked="true" id="fq1" name="filter" value="shining">
+<input type="checkbox" data-quality="glistening" data-filter="glistening" checked="true" id="fq2" name="filter" value="glistening">
+<input type="checkbox" data-quality="opulent" data-filter="opulent" checked="true" id="fq3" name="filter" value="opulent">
+<input type="checkbox" data-quality="radiant" data-filter="radiant" checked="true" id="fq4" name="filter" value="radiant">
+<input type="checkbox" data-quality="alpha" data-filter="alpha" checked="true" id="fq5" name="filter" value="alpha">
+		</div>
+	</div>
+</section>
 <nav class="nav">
 	<ul class="nav-list">
 		<li class="nav-item"><a href="#freshwater">Freshwater</a></li>
 		<li class="nav-item"><a href="#saltwater">Saltwater</a></li>
 		<li class="nav-item"><a href="#misc">Misc</a></li>
-		<li class="nav-item"><a href="#all">All</a></li>
+		<!-- <li class="nav-item"><a href="#all">All</a></li> -->
 	</ul>
 </nav>
 <form id="journal" class="form journal-content">
