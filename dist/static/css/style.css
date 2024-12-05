@@ -305,7 +305,7 @@ body {
 	appearance: none;
 	width: 15%;
 	min-width: 1rem;
-	aspect-ratio: 1rem;
+	aspect-ratio: 1;
 	cursor: pointer;
 	border-radius: 99rem;
 	outline-offset: 2px;
