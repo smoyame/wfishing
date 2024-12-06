@@ -61,11 +61,6 @@ const title = `wfishing | A Journal Tracker (v${gameVersion})`
 					<button type="button" class="data-button paste-button" aria-label="Import a data string from your clipboard."
 						onclick="pasteToApplyData()"><span class="button-text">Paste</span></button>
 				</div>
-				<div class="status" data-status="saved">
-					<div class="icon-badge status-badge">
-						<div class="icon"><i-check></i-check></div>
-					</div>
-				</div>
 			</div>
 		</header>
 		<div @raw="content" class="journal" id="all"></div>
