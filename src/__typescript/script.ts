@@ -1,6 +1,3 @@
-const form = document.forms['journal']
-let formData;
-
 function binFromIndexList(array: Array<string | number>) {
 	let binTemplate = ("000000").split('')
 	array.map((item) => { binTemplate[Number(item)] = "1" });
@@ -54,6 +51,8 @@ if (localStorage.getItem('journal')) {
 
 }
 
+const form = document.forms['journal']
+let formData;
 form.addEventListener('change', () => {
 	formData = new FormData(form)
 
