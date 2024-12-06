@@ -44,6 +44,19 @@ away.">
 	<div class="wrapper">
 		<header class="site-header">
 			<h1 class="site-title site-heading">Webfishing Journal&nbsp;Tracker</h1>
+			<div class="save-data">
+				<div class="data-bar">
+					<h3 class="data-title">Data:</h3>
+					<input type="text" name="dataString" id="savedata-field" disabled="true" placeholder="Waiting...">
+					<button type="button" aria-label="Copy a data string out to your clipboard." onclick="copyToTakeData()" class="data-button copy-button"><span class="button-text">Copy</span></button>
+					<button type="button" aria-label="Import a data string from your clipboard." onclick="pasteToApplyData()" class="data-button paste-button"><span class="button-text">Paste</span></button>
+				</div>
+				<div data-status="saved" class="status">
+					<div class="icon-badge status-badge">
+						<div class="icon"><i-check></i-check></div>
+					</div>
+				</div>
+			</div>
 		</header>
 		<div id="all" class="journal"><section class="settings">
 	<div class="filter">

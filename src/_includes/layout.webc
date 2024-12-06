@@ -52,6 +52,21 @@ const title = `wfishing | A Journal Tracker (v${gameVersion})`
 	<div class="wrapper">
 		<header class="site-header">
 			<h1 class="site-title site-heading">Webfishing Journal&nbsp;Tracker</h1>
+			<div class="save-data">
+				<div class="data-bar">
+					<h3 class="data-title">Data:</h3>
+					<input type="text" name="dataString" id="savedata-field" disabled="true" placeholder="Waiting..." />
+					<button type="button" class="data-button copy-button" aria-label="Copy a data string out to your clipboard."
+						onclick="copyToTakeData()"><span class="button-text">Copy</span></button>
+					<button type="button" class="data-button paste-button" aria-label="Import a data string from your clipboard."
+						onclick="pasteToApplyData()"><span class="button-text">Paste</span></button>
+				</div>
+				<div class="status" data-status="saved">
+					<div class="icon-badge status-badge">
+						<div class="icon"><i-check></i-check></div>
+					</div>
+				</div>
+			</div>
 		</header>
 		<div @raw="content" class="journal" id="all"></div>
 		<footer class="site-footer">
