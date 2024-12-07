@@ -9,7 +9,6 @@
 			"DOM.AsyncIterable",
 			"DOM.Iterable"
 		],
-		"outDir": "./src/static/js",
-		"downlevelIteration": true
+		"outDir": "./src/static/js"
 	}
 }

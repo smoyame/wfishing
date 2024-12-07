@@ -34,129 +34,87 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
-var __read = (this && this.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-function binFromIndexList(array) {
-    var binTemplate = ("000000").split('');
-    array.map(function (item) { binTemplate[Number(item)] = "1"; });
-    var newBin = binTemplate.join('').padStart(8, '0');
-    return newBin;
-}
-function indexListFromBin(input) {
-    var bin6Array = input.substring(2).split('');
-    var values = [];
-    bin6Array.forEach(function (item, index) {
-        if (item == "1") {
-            values.push(index);
-        }
+function getFormDataMap(formData) {
+    // Compress form data object; group all values to their one unique key.
+    var activeKeys = Array.from(new Set(formData.keys()));
+    var dataArrayInit = activeKeys.map(function (entry) {
+        console.log(formData.getAll(String(entry)));
+        var entryResults = formData.getAll(String(entry));
+        return entry = [String(entry), entryResults];
     });
-    return values;
+    console.log("".concat(activeKeys, "\n\n").concat(dataArrayInit));
+    return new Map(dataArrayInit);
 }
-function hexFromBin8(input) {
-    return parseInt(input, 2).toString(16);
-}
-function bin8FromHex(input) {
-    return parseInt(input, 16).toString(2).padStart(8, '0');
-}
-function parseSaveDataString(input) {
-    var x;
-    x = Array.from(input.split(",")).map(function (item) {
-        var pair = item.split('q');
-        if (pair.length != 2) {
-            alert("You pasted text, but it didn't break into a clean pair of a fish and its progress.\n\nNothing has been pasted or updated. Operation cancelled.");
-            throw new Error('Invalid data string.');
-        }
-        var decodedKey = parseInt(bin8FromHex(pair[0]), 2).toString();
-        var decodedProgress = indexListFromBin(bin8FromHex(pair[1]));
-        pair = [decodedKey, decodedProgress];
-        x = pair;
-        return item = pair;
+function encodeData(fdMap) {
+    var dataArray = [];
+    fdMap.forEach(function (valueArray, key) {
+        var binInit = ["0", "0", "0", "0", "0", "0"];
+        valueArray.map(function (item) { return binInit[Number(item)] = "1"; });
+        var eKey = Number(key).toString(16);
+        var eValue = parseInt(binInit.join('').padStart(8, '0'), 2).toString(16);
+        dataArray.push("".concat(eKey, "q").concat(eValue));
     });
-    return x;
+    return dataArray.join(',');
 }
-function applyDataArray(input) {
-    var e_1, _a, e_2, _b;
-    var inputIDs = [];
-    var _loop_1 = function (element) {
-        var key = element[0];
-        var progress = element[1];
-        progress.forEach(function (item) {
-            inputIDs.push("e".concat(key, "q").concat(item));
+function decodeData(fdString) {
+    var globalRegex = new RegExp('^(?:[a-f0-9]{1,2}q[a-f0-9]{1,2},?)+$', 'g');
+    if (!globalRegex.test(fdString)) {
+        alert("You pasted text, but the format is not recognizable.\n\nNothing has been pasted or updated. Operation cancelled.");
+        throw new Error('Invalid data string format. ');
+    }
+    var encodedEntries = Array.from(fdString.split(','));
+    var encodedArrayPairs = encodedEntries.map(function (entry) {
+        if (entry.split('q').length > 2) {
+            alert("You pasted text, but at least one journal entry didn't break into a clean pair of a fish and its progress.\n\nNothing has been pasted or updated. Operation cancelled.");
+            throw new Error('Invalid data string parsing result.');
+        }
+        return entry.split('q');
+    });
+    var decodedArrayPairs = encodedArrayPairs.map(function (pair) {
+        var encodedKey = String(pair[0]);
+        var decodedKey = parseInt(encodedKey, 16).toString(10);
+        var encodedValue = String(pair[1]);
+        var encodedValueBin6 = parseInt(encodedValue, 16).toString(2).padStart(6, '0').split('');
+        var decodedValue = [];
+        encodedValueBin6.forEach(function (item, index) {
+            if (item == "1") {
+                decodedValue.push(String(index));
+            }
         });
-    };
-    try {
-        for (var input_1 = __values(input), input_1_1 = input_1.next(); !input_1_1.done; input_1_1 = input_1.next()) {
-            var element = input_1_1.value;
-            _loop_1(element);
-        }
-    }
-    catch (e_1_1) { e_1 = { error: e_1_1 }; }
-    finally {
-        try {
-            if (input_1_1 && !input_1_1.done && (_a = input_1.return)) _a.call(input_1);
-        }
-        finally { if (e_1) throw e_1.error; }
-    }
-    try {
-        for (var inputIDs_1 = __values(inputIDs), inputIDs_1_1 = inputIDs_1.next(); !inputIDs_1_1.done; inputIDs_1_1 = inputIDs_1.next()) {
-            var id = inputIDs_1_1.value;
-            var input_2 = document.getElementById(id);
-            input_2.checked = true;
-        }
-    }
-    catch (e_2_1) { e_2 = { error: e_2_1 }; }
-    finally {
-        try {
-            if (inputIDs_1_1 && !inputIDs_1_1.done && (_b = inputIDs_1.return)) _b.call(inputIDs_1);
-        }
-        finally { if (e_2) throw e_2.error; }
-    }
+        var newPair = [decodedKey, decodedValue];
+        return newPair;
+    });
+    return new Map(decodedArrayPairs);
 }
-function formToLocalStorage(yourForm) {
-    formData = new FormData(yourForm);
-    var allKeys = Array.from(formData.keys());
-    var activeKeys = __spreadArray([], __read(new Set(allKeys)), false);
-    var data = activeKeys.map(function (entry) { return entry = [hexFromBin8(Number(entry).toString(2).padStart(8, '0')), hexFromBin8(binFromIndexList(formData.getAll(entry)))]; });
-    var dataString = data.map(function (item) { return item.join('q'); }).join(',');
-    localStorage.setItem('journal', dataString);
-    visibleDataField.value = dataString;
+function setFormData(fdMap) {
+    fdMap.forEach(function (entryIDs, entryKey) {
+        if (entryIDs.length > 6) {
+            alert("You pasted text, but it looks like the quality progress has too much information.\n\nNothing has been pasted or updated. Operation cancelled.");
+            throw new Error('Invalid data string parsing result. Too many quality entries.');
+        }
+        var inputElementIDs = [];
+        entryIDs.forEach(function (item) {
+            inputElementIDs.push("e".concat(entryKey, "q").concat(item));
+        });
+        for (var _i = 0, inputElementIDs_1 = inputElementIDs; _i < inputElementIDs_1.length; _i++) {
+            var id = inputElementIDs_1[_i];
+            var input = document.getElementById(id);
+            input.checked = true;
+        }
+    });
 }
+var siteForm = document.forms['journal'];
 var visibleDataField = document.querySelector('#savedata-field');
-function pasteToApplyData(input) {
+siteForm.addEventListener('change', function () {
+    var formData = new FormData(siteForm);
+    var dataMap = getFormDataMap(formData);
+    localStorage.setItem('journal', encodeData(dataMap));
+    visibleDataField.value = encodeData(dataMap);
+});
+function copyToTakeData() {
+    navigator.clipboard.writeText(visibleDataField.value);
+}
+function pasteToApplyData() {
     return __awaiter(this, void 0, void 0, function () {
         var incomingString;
         return __generator(this, function (_a) {
@@ -164,25 +122,11 @@ function pasteToApplyData(input) {
                 case 0: return [4 /*yield*/, navigator.clipboard.readText()];
                 case 1:
                     incomingString = _a.sent();
-                    parseSaveDataString(incomingString);
+                    setFormData(decodeData(incomingString));
                     visibleDataField.value = incomingString;
-                    applyDataArray(parseSaveDataString(incomingString));
-                    formToLocalStorage(document.forms['journal']);
+                    localStorage.setItem('journal', encodeData(getFormDataMap(new FormData(siteForm))));
                     return [2 /*return*/];
             }
         });
     });
 }
-function copyToTakeData() {
-    navigator.clipboard.writeText(visibleDataField.value);
-}
-if (localStorage.getItem('journal')) {
-    var savedData = localStorage.getItem('journal');
-    var loadedProgress = parseSaveDataString(savedData);
-    applyDataArray(loadedProgress);
-}
-var form = document.forms['journal'];
-var formData;
-form.addEventListener('change', function () {
-    formToLocalStorage(form);
-});

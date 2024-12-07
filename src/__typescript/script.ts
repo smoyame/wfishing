@@ -1,98 +1,104 @@
-function binFromIndexList(array: Array<string | number>) {
-	let binTemplate = ("000000").split('')
-	array.map((item) => { binTemplate[Number(item)] = "1" });
-	let newBin = binTemplate.join('').padStart(8, '0');
-	return newBin
-}
+type FormDataEntry = [string, string[]]
 
-function indexListFromBin(input) {
-	let bin6Array = input.substring(2).split('');
-	let values = [];
-	bin6Array.forEach((item, index) => {
-		if (item == "1") { values.push(index) }
+function getFormDataMap(formData: FormData): Map<string, string[]> {
+	// Compress form data object; group all values to their one unique key.
+	let activeKeys = Array.from(new Set(formData.keys()))
+	let dataArrayInit = activeKeys.map((entry: string | FormDataEntry) => {
+		console.log(formData.getAll(String(entry)))
+		let entryResults = formData.getAll(String(entry)) as string[]
+		return entry = [String(entry), entryResults]
 	})
-	return values
+	console.log(`${activeKeys}\n\n${dataArrayInit}`)
+	return new Map(dataArrayInit)
 }
 
-function hexFromBin8(input) {
-	return parseInt(input, 2).toString(16)
+function encodeData(fdMap: Map<string, string[]>): string {
+	let dataArray = [];
+	fdMap.forEach((valueArray, key) => {
+		let binInit = ["0", "0", "0", "0", "0", "0"]
+		valueArray.map((item) => { return binInit[Number(item)] = "1" });
+
+		let eKey = Number(key).toString(16)
+		let eValue = parseInt(binInit.join('').padStart(8, '0'), 2).toString(16)
+		dataArray.push(`${eKey}q${eValue}`)
+	})
+	return dataArray.join(',')
 }
 
-function bin8FromHex(input) {
-	return parseInt(input, 16).toString(2).padStart(8, '0')
-}
-
-function parseSaveDataString(input: string) {
-	let x;
-	x = Array.from(input.split(",")).map((item) => {
-		let pair: any = item.split('q')
-		if (pair.length != 2) {
-			alert("You pasted text, but it didn't break into a clean pair of a fish and its progress.\n\nNothing has been pasted or updated. Operation cancelled.")
-			throw new Error('Invalid data string.')
+function decodeData(fdString: string): Map<string, string[]> {
+	const globalRegex = new RegExp('^(?:[a-f0-9]{1,2}q[a-f0-9]{1,2},?)+$', 'g');
+	if (!globalRegex.test(fdString)) {
+		alert("You pasted text, but the format is not recognizable.\n\nNothing has been pasted or updated. Operation cancelled.")
+		throw new Error('Invalid data string format.')
+	}
+	let encodedEntries = Array.from(fdString.split(','));
+	let encodedArrayPairs = encodedEntries.map((entry: string) => {
+		if (entry.split('q').length > 2) {
+			alert("You pasted text, but at least one journal entry didn't break into a clean pair of a fish and its progress.\n\nNothing has been pasted or updated. Operation cancelled.")
+			throw new Error('Invalid data string parsing result.')
 		}
-		let decodedKey = parseInt(bin8FromHex(pair[0]), 2).toString()
-		let decodedProgress = indexListFromBin(bin8FromHex(pair[1]))
-		pair = [decodedKey, decodedProgress]
-		x = pair
-		return item = pair
+		return entry.split('q')
 	})
-	return x
-}
+	let decodedArrayPairs = encodedArrayPairs.map((pair) => {
+		const encodedKey = String(pair[0])
+		let decodedKey = parseInt(encodedKey, 16).toString(10)
 
-function applyDataArray(input) {
-	let inputIDs = [];
-	for (const element of input) {
-		let key = element[0]
-		let progress = element[1]
-		progress.forEach((item) => {
-			inputIDs.push(`e${key}q${item}`)
+		const encodedValue = String(pair[1])
+		let encodedValueBin6 = parseInt(encodedValue, 16).toString(2).padStart(6, '0').split('')
+		let decodedValue: string[] = [];
+		encodedValueBin6.forEach((item, index) => {
+			if (item == "1") { decodedValue.push(String(index)) }
 		})
-	}
-
-	for (const id of inputIDs) {
-		let input = <HTMLInputElement>document.getElementById(id);
-		input.checked = true;
-	}
+		const newPair: [string, string[]] = [decodedKey, decodedValue]
+		return newPair
+	})
+	return new Map(decodedArrayPairs)
 }
 
-function formToLocalStorage(yourForm) {
-	formData = new FormData(yourForm)
-
-	let allKeys = Array.from(formData.keys())
-	let activeKeys = [...new Set(allKeys)]
-
-	let data = activeKeys.map((entry) => entry = [hexFromBin8(Number(entry).toString(2).padStart(8, '0')), hexFromBin8(binFromIndexList(formData.getAll(entry)))])
-	let dataString = data.map((item) => item.join('q')).join(',')
-
-	localStorage.setItem('journal', dataString)
-	visibleDataField.value = dataString
+function setFormData(fdMap: Map<string, string[]>) {
+	fdMap.forEach((entryIDs, entryKey) => {
+		if (entryIDs.length > 6) {
+			alert("You pasted text, but it looks like the quality progress has too much information.\n\nNothing has been pasted or updated. Operation cancelled.")
+			throw new Error('Invalid data string parsing result. Too many quality entries.')
+		}
+		let inputElementIDs = [];
+		entryIDs.forEach((item) => {
+			inputElementIDs.push(`e${entryKey}q${item}`)
+		})
+		for (const id of inputElementIDs) {
+			let input = <HTMLInputElement>document.getElementById(id);
+			input.checked = true;
+		}
+	})
 }
 
+const siteForm = document.forms['journal']
 let visibleDataField = <HTMLInputElement>document.querySelector('#savedata-field');
 
-async function pasteToApplyData(input) {
-	let incomingString = await navigator.clipboard.readText()
-	parseSaveDataString(incomingString)
-	visibleDataField.value = incomingString
-	applyDataArray(parseSaveDataString(incomingString))
-	formToLocalStorage(document.forms['journal'])
-}
+window.onload = () => {
+	if (localStorage.getItem('journal')) {
+		setFormData(decodeData(localStorage.getItem('journal')))
+		visibleDataField.value = localStorage.getItem('journal')
+	}
+};
+
+siteForm.addEventListener('change', () => {
+	const formData = new FormData(siteForm)
+	let dataMap = getFormDataMap(formData)
+
+	localStorage.setItem('journal', encodeData(dataMap))
+	visibleDataField.value = encodeData(dataMap)
+})
 
 function copyToTakeData() {
 	navigator.clipboard.writeText(visibleDataField.value)
 }
 
-if (localStorage.getItem('journal')) {
-	let savedData = localStorage.getItem('journal')
-	let loadedProgress = parseSaveDataString(savedData)
+async function pasteToApplyData() {
+	let incomingString = await navigator.clipboard.readText()
 
-	applyDataArray(loadedProgress)
+	setFormData(decodeData(incomingString))
+	visibleDataField.value = incomingString
+
+	localStorage.setItem('journal', encodeData(getFormDataMap(new FormData(siteForm))))
 }
-
-const form = document.forms['journal']
-let formData;
-
-form.addEventListener('change', () => {
-	formToLocalStorage(form)
-})
-
