@@ -55,6 +55,39 @@ function decodeData(fdString: string): Map<string, string[]> {
 	return new Map(decodedArrayPairs)
 }
 
+function decodeSaveData(file: ArrayBuffer): Map<string, string[]> {
+	let fishMap = new Map()
+    	const array = new Uint8Array(file)
+    	let i = 0
+	
+    	for (let j = 0; i < array.length && j < 'journal'.length; i++, j++) {
+      		if (array[i] != 'journal'.charCodeAt(j)) {
+        		j = 0
+      		}
+    	}
+
+	// TODO: remove hardcoded number of fish
+    	for (let fish = 1; i < array.length && fish <= 78; fish++) {
+      		for (let j = 0; i < array.length && j < 'quality'.length; i++, j++) {
+        		if (array[i] != 'quality'.charCodeAt(j)) {
+          			j = 0
+        		}
+      		}
+      		i += 5
+		
+	      	let count = array[i]
+      		if (count > 0) {
+        		fishMap.set(fish.toString(), [])
+      		}
+
+      		for (let quality = 0; quality < count; quality++, i+= 8) {
+        		fishMap.get(fish.toString()).push(array[i])
+      		}
+    	}
+
+	return fishMap
+}
+
 function setFormData(fdMap: Map<string, string[]>) {
 	fdMap.forEach((entryIDs, entryKey) => {
 		if (entryIDs.length > 6) {
@@ -102,4 +135,14 @@ async function pasteToApplyData() {
 	visibleDataField.value = incomingString
 
 	localStorage.setItem('journal', encodeData(getFormDataMap(new FormData(siteForm))))
+}
+
+async function fileToApplyData(event) {
+	const file = await event.target.files[0].arrayBuffer()
+	const dataMap = decodeSaveData(file)
+	
+	setFormData(dataMap)
+	visibleDataField.value = encodeData(dataMap)
+	
+	localStorage.setItem('journal', visibleDataField.value)
 }
