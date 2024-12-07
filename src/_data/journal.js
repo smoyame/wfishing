@@ -438,19 +438,18 @@ const jData = [
 		section: "saltwater",
 		type: "ocean",
 		prefix_class: "fish"
-	},
-	{
-		_key: "56",
-		name: "seahorse",
-		title: "Seahorse",
+	}, {
+		_key: "57",
+		name: "sea_turtle",
+		title: "Sea Turtle",
 		section: "saltwater",
 		type: "ocean",
 		prefix_class: "fish"
 	},
 	{
-		_key: "57",
-		name: "sea_turtle",
-		title: "Sea Turtle",
+		_key: "56",
+		name: "seahorse",
+		title: "Seahorse",
 		section: "saltwater",
 		type: "ocean",
 		prefix_class: "fish"
