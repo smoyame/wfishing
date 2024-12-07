@@ -77,8 +77,9 @@ let visibleDataField = <HTMLInputElement>document.querySelector('#savedata-field
 
 window.onload = () => {
 	if (localStorage.getItem('journal')) {
-		setFormData(decodeData(localStorage.getItem('journal')))
-		visibleDataField.value = localStorage.getItem('journal')
+		let data = localStorage.getItem('journal')
+		setFormData(decodeData(data))
+		visibleDataField.value = data
 	}
 };
 

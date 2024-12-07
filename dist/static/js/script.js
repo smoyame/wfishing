@@ -60,7 +60,7 @@ function decodeData(fdString) {
     var globalRegex = new RegExp('^(?:[a-f0-9]{1,2}q[a-f0-9]{1,2},?)+$', 'g');
     if (!globalRegex.test(fdString)) {
         alert("You pasted text, but the format is not recognizable.\n\nNothing has been pasted or updated. Operation cancelled.");
-        throw new Error('Invalid data string format. ');
+        throw new Error('Invalid data string format.');
     }
     var encodedEntries = Array.from(fdString.split(','));
     var encodedArrayPairs = encodedEntries.map(function (entry) {
@@ -105,6 +105,13 @@ function setFormData(fdMap) {
 }
 var siteForm = document.forms['journal'];
 var visibleDataField = document.querySelector('#savedata-field');
+window.onload = function () {
+    if (localStorage.getItem('journal')) {
+        var data = localStorage.getItem('journal');
+        setFormData(decodeData(data));
+        visibleDataField.value = data;
+    }
+};
 siteForm.addEventListener('change', function () {
     var formData = new FormData(siteForm);
     var dataMap = getFormDataMap(formData);
